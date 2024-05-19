@@ -1,0 +1,24 @@
+Sea la base de datos Videojuego, que se crea al ejecutar el script videojuego.sql y que está
+formada por las tablas Personaje, Arma y Escudo.
+
+Se pide utilizando el fichero de texto jugadas.txt actualizar la tabla Personaje, atendiendo a
+las siguientes condiciones:
+
+	. Cada línea del fichero de texto está compuesta por:
+		Cod_Personaje, cod_Arma, Cod_Personaje, cod_Escudo
+	
+	. El personaje que va en primer lugar es el que ataca con el arma que va a continuación y el segundo personaje es el que se 
+	defiende con el escudo que va a continuación. 
+
+Cada arma y cada escudo tienen asociados un valor que se encuentran en su tabla	correspondiente.
+	
+	• Si el valor del arma >valor del escudo, a las vidas del personaje defensor se le restará la diferencia entre los dos valores.
+	
+	• Si el valor del arma <valor del escudo, a las vidas del personaje atacante se	restará la diferencia entre los dos valores.
+
+Si alguno de los personajes del fichero, o arma o escudo, no están en la tabla correspondiente se informará al usuario mediante un mensaje.
+Tras actualizar, el valor de las vidas se eliminarán todos aquellos personajes que se queden con menos del 50% de su vida inicial.
+
+Finalmente, mostrar cómo queda la tabla Personaje.
+
+Las operaciones de bases de datos se deben hacer utilizando SENTENCIAS PREPARADAS.
