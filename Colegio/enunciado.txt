@@ -1,0 +1,18 @@
+Dado el script Colegio.sql, que crea la BD Colegio, compuesta de las tablas Cambios y
+Alumnos, hacer un programa, utilizando sentencias preparadas, que actualice la tabla
+Alumnos con los registros de la tabla Cambios.
+
+El campo Tipo, de la tabla Cambios, puede contener "BJ", "MD", lo que significa que hay
+que dar de Baja o Modificar el registro que viene indicado por el campo Matricula.
+
+Dicho registro puede existir o no. En caso de no existir o de que se produjera un error al
+realizar la operación, se mostrará un mensaje por pantalla indicándolo. Si no existe dicho
+alumno, se le preguntara si le quiere dar de alta y en caso afirmativo, se pedirán los datos
+por teclado y se insertara en la tabla de alumnos.
+
+Si el alumno existe, se realizará el cambio solicitado y se indicará por pantalla que la
+operación correspondiente (Baja o Modificación) se ha realizado correctamente sobre el
+registro <Matricula del registro>.
+
+La modificación consiste en incrementar el campo Nota con el valor que viene en el
+campo Incremento
