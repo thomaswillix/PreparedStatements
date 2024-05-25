@@ -6,9 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -43,8 +41,7 @@ public class Main {
         System.out.println("\n\n-------- Cambios --------");
         rs = st.executeQuery("select * from cambios");
         String operacion;
-        char respuesta;
-        boolean respuestaCorrecta;
+        
         Scanner sc = new Scanner(System.in);
         while (rs.next()) {
             operacion = rs.getString(2);
