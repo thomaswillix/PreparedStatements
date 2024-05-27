@@ -50,6 +50,7 @@ public class Libro {
             + ", editorial: " + rs.getString(4)+ ", paginas: " + rs.getInt(5)+ ", copias: " + rs.getInt(6) + ", precio: "
             + rs.getDouble(7));
         }
+        st.close();
     }
     public static void actualizarCopias(Connection con, PreparedStatement comprobacion, int isbn, int copias) throws SQLException{
         comprobacion.setInt(1, isbn);
@@ -73,6 +74,8 @@ public class Libro {
             setPrecio.setInt(2, rs.getInt(1));
             setPrecio.execute();
         }
+        st.close();
+        setPrecio.close();
     }
     
     public static void setPrecioPorIsbn(Connection con, PreparedStatement comprobacion, int isbn1, int isbn2, double precio) throws SQLException {
@@ -94,17 +97,17 @@ public class Libro {
             int paginas = rs.getInt(5);
             precio1=precio*paginas;
             //Actualización libro 2
-            setPrecioPst.setDouble(1, Math.min(precio1, precio2));
+            setPrecioPst.setDouble(1, Math.max(precio1, precio2));
             setPrecioPst.setInt(2, isbn2);
             setPrecioPst.execute();
         }else System.err.println("El isbn 2 no pertenece a ningún libro");
         if (existeISBN1) {
         //Actualización libro 1;
-            setPrecioPst.setDouble(1, Math.min(precio1, precio2));
+            setPrecioPst.setDouble(1, Math.max(precio1, precio2));
             setPrecioPst.setInt(2, isbn1);
             setPrecioPst.execute();
         }
-        
+        setPrecioPst.close();
     }
     
     public static void actualizarPaginasYPrecio(Connection con, PreparedStatement comprobacion, int isbn, int paginas, float precioF) throws SQLException{
@@ -119,20 +122,42 @@ public class Libro {
             update.setInt(3, isbn);
             update.executeUpdate();
         }else System.err.println("No existe el libro por lo que no se pueden realizar la operacion");
+        update.close();
     }
     public static void InsertarCopiaLibro(Connection con, PreparedStatement comprobacion, int isbn1, int isbn2) throws SQLException {
         PreparedStatement insert = con.prepareStatement("insert into libros values (?,?,?,?,?,?,?)");
         comprobacion.setInt(1, isbn1);
         rs = comprobacion.executeQuery();
+        
+        String titulo, autor, editorial;
+        int paginas, copias;
+        double precio;
+        
         if (rs.next()) {
-            insert.setInt(1, isbn2);
-            insert.setString(2, rs.getString(2));
-            insert.setString(3, rs.getString(3));
-            insert.setString(4, rs.getString(4));
-            insert.setInt(5, rs.getInt(5));
-            insert.setInt(6, rs.getInt(6));
-            insert.setDouble(7, rs.getDouble(7));
+            titulo = rs.getString(2);
+            autor = rs.getString(3);
+            editorial = rs.getString(4);
+            paginas = rs.getInt(5);
+            copias = rs.getInt(6);
+            precio = rs.getDouble(7);
+            
+            comprobacion.setInt(1, isbn2);
+            rs = comprobacion.executeQuery();
+            if(rs.next()){
+                System.err.println("El ISBN ya pertenece a otro libro de la base de datos");
+            }else {
+                insert.setInt(1, isbn2);
+                insert.setString(2, titulo);
+                insert.setString(3, autor);
+                insert.setString(4, editorial);
+                insert.setInt(5, paginas);
+                insert.setInt(6, copias);
+                insert.setDouble(7, precio);
+                insert.execute();
+                System.out.println("Libro insertado con éxito\n");
+            }
         }else System.err.println("No existe el primer ISBN en la base de datos");
+        insert.close();
     }
     
 }
